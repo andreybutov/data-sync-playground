@@ -7,6 +7,38 @@
 // ----------------------------------------------------------------------------
 
 //
+// These are your initial data sets. One for each of the clients, and one
+// for the server.
+//
+
+const initialDataClient1 = {
+	"Dune" : {
+		"Author" : "Frank Herbert",
+		"Publication Year" : "1965"
+	},
+	"Neuromancer" : {
+		"Author" : "William Gibson",
+		"Publication Year" : "1984"
+	}
+};
+
+const initialDataClient2 = {
+	"The Martian" : {
+		"Author" : "Andy Weir",
+		"Publication Year" : "2011"
+	},
+	"The Three-Body Problem" : {
+		"Author" : "Liu Cixin",
+		"Publication Year" : "2008"
+	}
+}
+
+const initialDataServer = {
+	// No data initially.
+}
+
+
+//
 // This is your data sync function. Imagine it runs on your "server". 
 //
 // incomingClientState is JSON data containing the complete state sent
@@ -20,8 +52,12 @@
 //
 
 function performDataSync(incomingClientState, serverState) {
-	console.log("performDataSync called");
-	return serverState;
+	log("Performing data sync ...");
+
+	// For example, here we're just merging the server state and client state.
+	// But you'll implement something smarter. :)
+	
+	return { ...serverState, ...incomingClientState };
 }
 
 
@@ -32,24 +68,61 @@ function performDataSync(incomingClientState, serverState) {
 // INTERNAL
 // ----------------------------------------------------------------------------
 
-const editorClient1 = new JSONEditor(document.getElementById("json-editor-client-1"), {});
-const editorClient2 = new JSONEditor(document.getElementById("json-editor-client-2"), {});
-const editorServer = new JSONEditor(document.getElementById("json-editor-server"), {});
+const logWindow = document.getElementById("logWindow");
 
-editorClient1.set({
-	"Key-A1" : "Value-A1",
-	"Key-A2" : "Value-A2"
-});
+const clientOptions = {
+	mode: 'code',
+	modes: ['code', 'tree'],
+	enableTransform: false,
+	enableSort: false,
+	search: false
+}
 
-editorClient2.set({
-	"Key-B1" : "Value-B1",
-	"Key-B2" : "Value-B2"
-});
+const serverOptions = {
+	'mode': 'view', // read-only
+	search: false,
+	enableTransform: false,
+	enableSort: false,
+}
 
-editorServer.set({
+const editorClient1 = new JSONEditor(document.getElementById("json-editor-client-1"), clientOptions);
+const editorClient2 = new JSONEditor(document.getElementById("json-editor-client-2"), clientOptions);
+const editorServer = new JSONEditor(document.getElementById("json-editor-server"), serverOptions);
 
-});
+document.getElementById("syncButtonClient1").onclick = () => onSyncBtnClicked(editorClient1);
+document.getElementById("syncButtonClient2").onclick = () => onSyncBtnClicked(editorClient2);
+document.getElementById("resetButton").onclick = reset;
 
-// const updatedJSON = editorServer.get();
+reset();
 
-// performDataSync();
+
+
+function log(s) {
+	let p = document.createElement("p");
+	p.append(s);
+	logWindow.prepend(p);
+}
+
+
+
+function reset() {
+	editorClient1.set(initialDataClient1);
+	editorClient2.set(initialDataClient2);
+	editorServer.set(initialDataServer);
+	logWindow.innerHTML = '';
+	log("Welcome to the data sync playground ...");
+}
+
+
+
+function onSyncBtnClicked(clientEditor) {
+	try {
+		let clientJSON = clientEditor.get();
+		let serverJSON = editorServer.get();
+		let newJSON = performDataSync(clientJSON, serverJSON);
+		clientEditor.set(newJSON);
+		editorServer.set(newJSON);
+	} catch(e) {
+		log("Could not sync data. Invalid JSON? " + e);
+	}
+}

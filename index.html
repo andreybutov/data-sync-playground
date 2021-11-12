@@ -30,18 +30,30 @@
 				display: flex;
 				flex-direction: row;
 				justify-content: space-between;
-				margin-top: 20px;
 			}
 
 			#editorContainer {
 				display: flex;
+				flex-direction: column;
+			}
+
+			.controlPanel {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: center;
+			}
+
+			.clientTitle {
+				font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+				color: #333;
+				font-size: 14px;
 			}
 
 			.editor {
 				width: 400px;
 				height: 400px;
 			}
-
 
 			#logWindow {
 				display: flex;
@@ -51,7 +63,6 @@
 				overflow-y: auto; 
 				background-color: #333; 
 				padding: 20px;
-				line-height: 30px;
 				margin-top: 20px;
 			}
 
@@ -60,6 +71,13 @@
 				font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 				font-weight: 600;
 				font-size: 18px;
+			}
+
+			#bottomPanel {
+				display: flex;
+				flex-direction: row;
+				justify-content: flex-start;
+				margin-top: 20px;
 			}
 
 		</style>
@@ -73,17 +91,28 @@
 			<h1 id="title">Data Sync Playground</h1>
 			<div id="editorsRow">
 				<div class="editorContainer">
+					<div class="controlPanel">
+						<h3 class="clientTitle">Client 1</h3>
+						<button id="syncButtonClient1">Sync with server</button>
+					</div>
 					<div class="editor" id="json-editor-client-1"></div>
+					<div class="controlPanel"></div>
 				</div>
 				<div class="editorContainer">
+					<div class="controlPanel">
+						<h3 class="clientTitle">Client 2</h3>
+						<button id="syncButtonClient2">Sync with server</button>
+					</div>
 					<div class="editor" id="json-editor-client-2""></div>
 				</div>
 				<div class="editorContainer">
+					<h3 class="clientTitle">Server</h3>
 					<div class="editor" id="json-editor-server""></div>
 				</div>
 			</div>
-			<div id="logWindow">
-				<p>> Welcome to the data sync playground ...</p>
+			<div id="logWindow"></div>
+			<div id="bottomPanel">
+				<button id="resetButton">Reset</button>
 			</div>
 		</div>
 
