@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">		
+
+		<title>Data Sync Playground</title>
+
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.5.7/jsoneditor.css" rel="stylesheet" type="text/css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.5.7/jsoneditor.min.js"></script>
+
+		<style>
+			body {
+				min-width: 1250px;
+			}
+
+			#topContainer {
+				display: flex;
+				flex-direction: column;
+				padding: 20px;
+			}		
+			
+			#title {
+				text-align: center;
+				font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+				color: #333;
+			}
+
+			#editorsRow {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				margin-top: 20px;
+			}
+
+			#editorContainer {
+				display: flex;
+			}
+
+			.editor {
+				width: 400px;
+				height: 400px;
+			}
+
+
+			#logWindow {
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-start;
+				height: 240px; 
+				overflow-y: auto; 
+				background-color: #333; 
+				padding: 20px;
+				line-height: 30px;
+				margin-top: 20px;
+			}
+
+			#logWindow > p {
+				color: #aaa;
+				font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+				font-weight: 600;
+				font-size: 18px;
+			}
+
+		</style>
+
+		<script defer src="./app.js"></script> 
+	</head>
+	<body>
+
+
+		<div id="topContainer">
+			<h1 id="title">Data Sync Playground</h1>
+			<div id="editorsRow">
+				<div class="editorContainer">
+					<div class="editor" id="json-editor-client-1"></div>
+				</div>
+				<div class="editorContainer">
+					<div class="editor" id="json-editor-client-2""></div>
+				</div>
+				<div class="editorContainer">
+					<div class="editor" id="json-editor-server""></div>
+				</div>
+			</div>
+			<div id="logWindow">
+				<p>> Welcome to the data sync playground ...</p>
+			</div>
+		</div>
+
+
+
+	</body>
+</html>
